@@ -52,6 +52,7 @@
 spring:
   canal:
     enabled: true
+    tx-enabled: false
     mode: simple
     simple:
       destination: example
@@ -60,10 +61,6 @@ spring:
       so-timeout: PT60S
       idle-timeout: PT1H
       batch-size: 500
-      poll-sleep: 100
-      batch-fail-sleep: PT5S
-      reconnect-sleep: PT3S
-      batch-transaction-enabled: false
 ```
 
 ###### 2.2 创建Java对象 Bean [CanalClientListener.java](src/test/java/io/github/gengzhy/CanalClientListener.java)，
