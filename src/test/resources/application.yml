@@ -1,0 +1,14 @@
+spring:
+  canal:
+    enabled: true
+    tx-enabled: false
+    mode: simple
+    simple:
+      destination: example
+      host: 127.0.0.1
+      port: 11111
+      so-timeout: PT60S
+      idle-timeout: PT1H
+      batch-size: 500
+
+
