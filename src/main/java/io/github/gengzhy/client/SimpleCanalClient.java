@@ -47,9 +47,9 @@ public class SimpleCanalClient extends AbstractCanalClient {
         CanalProperties.Simple simple = getProperties().getSimple();
         connector = new SimpleCanalConnector(
                 new InetSocketAddress(simple.getHost(), simple.getPort()),
-                simple.getDestination(),
                 StringUtils.trimToEmpty(simple.getUsername()),
                 StringUtils.trimToEmpty(simple.getPassword()),
+                simple.getDestination(),
                 simple.getSoTimeout().toMillisPart(),
                 simple.getIdleTimeout().toMillisPart()
         );

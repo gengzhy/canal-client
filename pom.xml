@@ -59,6 +59,12 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- 解决原生canal client 依赖的 protobuf-java v3.6.1 老版本漏洞问题 -->
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+                <version>3.21.12</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -18,6 +18,7 @@
 
 package io.github.gengzhy.event;
 
+import com.alibaba.otter.canal.protocol.Message;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
@@ -26,9 +27,9 @@ import org.springframework.context.ApplicationEvent;
  */
 @Getter
 public class CanalRawBinlogEvent extends ApplicationEvent {
-    private final Object canalMessage;
+    private final Message canalMessage;
 
-    public CanalRawBinlogEvent(Object source, Object canalMessage) {
+    public CanalRawBinlogEvent(Object source, Message canalMessage) {
         super(source);
         this.canalMessage = canalMessage;
     }

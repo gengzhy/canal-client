@@ -20,7 +20,6 @@ package io.github.gengzhy.client;
 
 import com.alibaba.otter.canal.client.impl.ClusterCanalConnector;
 import com.alibaba.otter.canal.client.impl.ClusterNodeAccessStrategy;
-import com.alibaba.otter.canal.client.impl.SimpleCanalConnector;
 import com.alibaba.otter.canal.client.impl.SimpleNodeAccessStrategy;
 import com.alibaba.otter.canal.common.zookeeper.ZkClientx;
 import io.github.gengzhy.config.CanalProperties;
@@ -30,7 +29,6 @@ import org.apache.commons.lang.StringUtils;
 
 import java.net.InetSocketAddress;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -53,16 +51,21 @@ public class ClusterCanalClient extends AbstractCanalClient {
     protected final void init() {
         CanalProperties.Cluster cluster = getProperties().getCluster();
         if (StringUtils.isNotEmpty(cluster.getZkServers())) {
-            connector = new ClusterCanalConnector(cluster.getUsername(),
-                    cluster.getPassword(),
+            connector = new ClusterCanalConnector(
+                    StringUtils.trimToEmpty(cluster.getUsername()),
+                    StringUtils.trimToEmpty(cluster.getPassword()),
                     cluster.getDestination(),
                     new ClusterNodeAccessStrategy(cluster.getDestination(), ZkClientx.getZkClient(cluster.getZkServers())));
         } else {
-            List<InetSocketAddress> addresses = Stream.of(cluster.getAddresses().split("[,;，；]")).map(s -> {
-                String[] split = s.split("[:：]");
-                return new InetSocketAddress(split[0], Integer.parseInt(split[1]));
-            }).collect(Collectors.toList());
-            connector = new ClusterCanalConnector(cluster.getUsername(), cluster.getPassword(), cluster.getDestination(),
+            List<InetSocketAddress> addresses = Stream.of(cluster.getAddresses().split("[,;，；]"))
+                    .map(s -> {
+                        String[] split = s.split("[:：]");
+                        return new InetSocketAddress(split[0], Integer.parseInt(split[1]));
+                    }).toList();
+            connector = new ClusterCanalConnector(
+                    StringUtils.trimToEmpty(cluster.getUsername()),
+                    StringUtils.trimToEmpty(cluster.getPassword()),
+                    cluster.getDestination(),
                     new SimpleNodeAccessStrategy(addresses));
         }
         ClusterCanalConnector c = (ClusterCanalConnector) connector;
